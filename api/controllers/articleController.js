@@ -1,4 +1,5 @@
 
+import { returnService } from "../loadBalancer.js";
 
 export const getArticles = async (req, res, next) => {
     return res.status(200).json({ message: 'Get article route' });
