@@ -2,7 +2,7 @@
 
 const balancer = {
     users: {
-        services: ['usersService1', 'usersService2', 'usersService3'],
+        services: ['http://users1:4001', 'http://users2:4002', 'http://users3:4003'],
         index: 0
     },
     articles: {
@@ -21,14 +21,22 @@ const getLoadBalancer = () => {
 };
 
 export const returnService = (req) => {
-    let serviceInstance = null;
     let balancerInstance = getLoadBalancer();
     let url = req.baseUrl;
     let requestedService = balancerInstance?.[url.substring(1)];
     if(requestedService){
         requestedService.index = requestedService.index < requestedService.services.length ? requestedService.index : 0;
-        serviceInstance = requestedService.services[requestedService.index];
+        let serviceInstance = requestedService.services[requestedService.index];
         requestedService.index += 1;
+        // http://users1:4001
+        let serviceInstanceOriginArray = serviceInstance.split(":");
+        serviceInstanceOriginArray[1] = serviceInstanceOriginArray[1].substring(2);
+        let [protocol, host, port] = serviceInstanceOriginArray;
+        return {
+            protocol,
+            host,
+            port
+        }
     }
-    return serviceInstance;
+    return null;
 };
