@@ -13,14 +13,12 @@ const loadBalancer = {
 
 
 export const balancerMiddleware = async (req, res, next) => {
-    //console.log(req.baseUrl);
     let url = req.baseUrl;
     let requestedService = loadBalancer?.[url.substring(1)];
     if(requestedService){
         requestedService.index = requestedService.index < requestedService.services.length ? requestedService.index : 0;
         let service = requestedService.services[requestedService.index];
         requestedService.index += 1;
-        console.log(service);
     }
     next();
 };
