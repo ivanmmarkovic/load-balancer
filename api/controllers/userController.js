@@ -1,26 +1,41 @@
 
 import { returnService } from "../loadBalancer.js";
-import { createUserUtil, getUsersUtil } from "../utils.js";
+import { createUserUtil, getUsersUtil , handleErrors} from "../utils.js";
 
 export const getUsers = async (req, res, next) => {
     let service = returnService(req);
     // check if service is null
-    console.log(service);
     let {protocol, host, port} = service;
     try {
-        let d = await getUsersUtil(protocol, host, port);
-        console.log(d);
+        let {status, data, message} = await getUsersUtil(protocol, host, port);
+        return res.status(status).json({
+            status, 
+            data, 
+            message
+        });
     } catch (error) {
-        console.log('Error ', error.message);
+        let [status, message] = handleErrors(error);
+        error.status = status;
+        error.message = message;
+        next(error);
     }
-    return res.status(200).json({ message: 'Get users route' });
 };
 
 export const createUser = async (req, res, next) => {
     let service = returnService(req);
     // check if service is null
     let {protocol, host, port} = service;
-    let o = await createUserUtil(protocol, host, port, req.body);
-    console.log(o);
-    return res.status(200).json({ message: 'Create user route' });
+    try {
+        let {status, data, message} = await createUserUtil(protocol, host, port, req.body);
+        return res.status(status).json({
+            status, 
+            data, 
+            message
+        });
+    } catch (error) {
+        let [status, message] = handleErrors(error);
+        error.status = status;
+        error.message = message;
+        next(error);
+    }
 };

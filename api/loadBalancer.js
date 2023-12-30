@@ -28,7 +28,6 @@ export const returnService = (req) => {
         requestedService.index = requestedService.index < requestedService.services.length ? requestedService.index : 0;
         let serviceInstance = requestedService.services[requestedService.index];
         requestedService.index += 1;
-        // http://users1:4001
         let serviceInstanceOriginArray = serviceInstance.split(":");
         serviceInstanceOriginArray[1] = serviceInstanceOriginArray[1].substring(2);
         let [protocol, host, port] = serviceInstanceOriginArray;
