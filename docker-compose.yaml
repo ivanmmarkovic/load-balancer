@@ -1,5 +1,10 @@
 version: '3'
 services:
+  mongodbusers:
+    image: mongo:latest
+    container_name: 'mongodbusers'
+    ports:
+      - 27017:27017
   api:
     build:
       context: api
@@ -17,6 +22,8 @@ services:
     ports:
       - 4001:4001
     restart: on-failure
+    depends_on:
+      - 'mongodbusers'
     volumes: 
       - ./users:/app
       - /app/node_modules
@@ -28,6 +35,8 @@ services:
     ports:
       - 4002:4002
     restart: on-failure
+    depends_on:
+      - 'mongodbusers'
     volumes: 
       - ./users:/app
       - /app/node_modules
@@ -39,6 +48,8 @@ services:
     ports:
       - 4003:4003
     restart: on-failure
+    depends_on:
+      - 'mongodbusers'
     volumes: 
       - ./users:/app
       - /app/node_modules
