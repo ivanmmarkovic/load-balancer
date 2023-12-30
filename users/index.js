@@ -3,6 +3,8 @@ import express from 'express';
 const app = express();
 
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
 import { UserModel } from './model.js';
 import { handleErrors } from './utils.js';
 
@@ -36,6 +38,7 @@ app.get('/users', async (req, res, next) => {
 app.post('/users', async (req, res, next) => {
     console.log(`Users service users post ${process.env.PORT}`);
     try {
+        req.body.password = await bcrypt.hash(req.body.password, 10);
         let user = await UserModel.create(req.body);
         return res.status(201).json({
             status: 201,
