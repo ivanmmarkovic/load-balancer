@@ -7,6 +7,10 @@ export function handleErrors(error) {
         status = 400;
         message = `Duplicate key ${key}`;
     }
+    if(error.message.indexOf('Cast to ObjectId failed for value') != -1){
+        status = 400;
+        message = `Invalid param`;
+    }
     if(error.message.indexOf('required') != -1){
         let index = error.message.indexOf('`') + 1;
         let key = error.message.substring(error.message.indexOf('`') + 1, error.message.indexOf('`', index));
