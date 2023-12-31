@@ -3,8 +3,15 @@ Load balancer implementation in Node.js
 
 Implementation of round‑robin load balancing.
 
+![alt text](https://github.com/ivanmmarkovic/misc/blob/c14b0ee7fde54f4f8210b2a778a242dc4c132532/load-balancer/load%20balancer.png)
 
-![alt text](https://github.com/ivanmmarkovic/misc/blob/9e38b521afa94544a90424e97615a16774cfd815/images-microservices-app/my-microservice-project.png)
+- [Firefox icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/firefox)
+
+- [Server icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/server)
+
+- [Server icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/database)
+
+Project description
 
 - One api-gateway microservice(contains load balancer implementation)
 - Three instances of users microservices 
