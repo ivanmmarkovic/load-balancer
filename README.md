@@ -5,7 +5,7 @@ Implementation of round‑robin load balancing.
 
 ![alt text](https://github.com/ivanmmarkovic/misc/blob/c14b0ee7fde54f4f8210b2a778a242dc4c132532/load-balancer/load%20balancer.png)
 
-- [Firefox icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/firefox)
+- [Firefox icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/firefox){:target="_blank"}
 
 - [Server icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/server)
 
