@@ -12,14 +12,17 @@ mongoose.connect('mongodb://mongodbusers:27017/users?authSource=admin', {
     useNewUrlParser: true,
     useUnifiedTopology: true 
 })
-.catch(e => console.log(e.message))
-.finally(() => console.log('Finally'));
+.catch(e => console.log(e.message));
 
 app.use(express.json());
 
+app.use("*", async (req, res, next) => {
+    console.log(`Users microservice on port ${process.env.PORT}, url ${req.baseUrl}, method ${req.method}`);
+    next();
+});
+
 
 app.get('/users', async (req, res, next) => {
-    console.log(`Users service users get ${process.env.PORT}`);
     try {
         let users = await UserModel.find({});
         return res.status(200).json({
@@ -36,7 +39,6 @@ app.get('/users', async (req, res, next) => {
 });
 
 app.get('/users/:id', async (req, res, next) => {
-    console.log(`Users service users get ${process.env.PORT}`);
     try {
         let {id} = req.params;
         let user = await UserModel.findById(id);
@@ -61,7 +63,6 @@ app.get('/users/:id', async (req, res, next) => {
 });
 
 app.post('/users', async (req, res, next) => {
-    console.log(`Users service users post ${process.env.PORT}`);
     try {
         req.body.password = await bcrypt.hash(req.body.password, 10);
         let user = await UserModel.create(req.body);
@@ -79,7 +80,6 @@ app.post('/users', async (req, res, next) => {
 });
 
 app.patch('/users/:id', async (req, res, next) => {
-    console.log(`Users service users get ${process.env.PORT}`);
     try {
         let {id} = req.params;
         if(req.body.password){
@@ -107,11 +107,9 @@ app.patch('/users/:id', async (req, res, next) => {
 });
 
 app.delete('/users/:id', async (req, res, next) => {
-    console.log(`Users service users get ${process.env.PORT}`);
     try {
         let {id} = req.params;
         let user = await UserModel.findByIdAndDelete(id);
-        console.log(user);
         if(!user){
             return res.status(404).json({
                 status: 404,
@@ -131,7 +129,6 @@ app.delete('/users/:id', async (req, res, next) => {
         next(error);
     }
 });
-
 
 app.use((err, req, res, next) => {
     let status = err.status || 500;
