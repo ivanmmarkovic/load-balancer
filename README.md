@@ -15,7 +15,7 @@ Project description
 
 - One api-gateway microservice(contains load balancer implementation)
 - Three instances of users microservices 
-- All instances share same MongoDB instance.
+- All instances of users microservice share same MongoDB instance.
 
 You can access application on http://localhost:8080.
 To test all routes, there is a Postman collection.
